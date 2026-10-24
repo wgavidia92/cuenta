@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: INFO
+
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:devsu-cuenta
+    username: sa
+    password: sa
