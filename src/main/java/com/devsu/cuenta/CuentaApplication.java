@@ -3,7 +3,7 @@ package com.devsu.cuenta;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.devsu.cuenta.*")
 public class CuentaApplication {
 
 	public static void main(String[] args) {
