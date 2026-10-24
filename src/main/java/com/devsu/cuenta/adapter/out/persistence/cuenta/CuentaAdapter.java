@@ -40,7 +40,7 @@ class CuentaAdapter implements ObtenerCuentaPort, ModificarCuentaPort {
                 cuentaDto.saldoInicial(),
                 cuentaDto.estado());
         var cuentaAlmacenada = cuentaRepository.save(cuenta);
-        return from(cuentaAlmacenada, cuentaDto.nombreCliente()    );
+        return from(cuentaAlmacenada, cuentaDto.nombreCliente());
     }
 
     @Override
