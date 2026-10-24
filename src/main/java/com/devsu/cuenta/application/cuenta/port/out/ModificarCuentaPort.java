@@ -1,4 +1,4 @@
-package com.devsu.cuenta.application.port.cuenta.out;
+package com.devsu.cuenta.application.cuenta.port.out;
 
 import com.devsu.cuenta.application.cuenta.model.CuentaDto;
 import com.devsu.cuenta.exception.CuentaException;

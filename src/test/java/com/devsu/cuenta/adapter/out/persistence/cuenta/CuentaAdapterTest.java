@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,6 +33,13 @@ class CuentaAdapterTest {
         Mockito.when(cuentaRepository.findByClienteId(Mockito.anyLong()))
                 .thenReturn(List.of(crearCuentaEntity(true)));
         Assertions.assertDoesNotThrow(() -> cuentaAdapter.obtenerCuentaPorClienteId(1L, "Cliente"));
+    }
+
+    @Test
+    void obtenerCuentaPorNumeroTest() {
+        Mockito.when(cuentaRepository.findByNumero(Mockito.anyString()))
+                .thenReturn(Optional.of(crearCuentaEntity(true)));
+        Assertions.assertDoesNotThrow(() -> cuentaAdapter.obtenerCuentaPorNumero("1234"));
     }
 
     @Test

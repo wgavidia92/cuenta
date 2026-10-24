@@ -1,14 +1,15 @@
 package com.devsu.cuenta.adapter.out.persistence.cuenta;
 
 import com.devsu.cuenta.application.cuenta.model.CuentaDto;
-import com.devsu.cuenta.application.port.cuenta.out.ModificarCuentaPort;
-import com.devsu.cuenta.application.port.cuenta.out.ObtenerCuentaPort;
+import com.devsu.cuenta.application.cuenta.port.out.ModificarCuentaPort;
+import com.devsu.cuenta.application.cuenta.port.out.ObtenerCuentaPort;
 import com.devsu.cuenta.exception.CuentaException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 class CuentaAdapter implements ObtenerCuentaPort, ModificarCuentaPort {
@@ -28,6 +29,12 @@ class CuentaAdapter implements ObtenerCuentaPort, ModificarCuentaPort {
                 .stream()
                 .map(entity -> from(entity, nombreCliente))
                 .toList();
+    }
+
+    @Override
+    public Optional<CuentaDto> obtenerCuentaPorNumero(String numero) throws CuentaException {
+        return cuentaRepository.findByNumero(numero)
+                .map(entity -> from(entity, numero));
     }
 
     @Override

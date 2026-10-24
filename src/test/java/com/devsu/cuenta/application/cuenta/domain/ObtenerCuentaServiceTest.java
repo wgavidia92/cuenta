@@ -1,9 +1,9 @@
 package com.devsu.cuenta.application.cuenta.domain;
 
 import com.devsu.cuenta.UtilsTest;
-import com.devsu.cuenta.application.port.cuenta.in.ObtenerCuentaUseCase;
-import com.devsu.cuenta.application.port.cuenta.out.ObtenerCuentaPort;
-import com.devsu.cuenta.application.port.cuenta.out.ObtenerInformacionClientePort;
+import com.devsu.cuenta.application.cuenta.port.in.ObtenerCuentaUseCase;
+import com.devsu.cuenta.application.cuenta.port.out.ObtenerCuentaPort;
+import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
 import com.devsu.cuenta.exception.CuentaException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

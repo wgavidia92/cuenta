@@ -1,8 +1,8 @@
 package com.devsu.cuenta.adapter.out.persistence.movimiento;
 
 import com.devsu.cuenta.application.movimiento.model.MovimientoDto;
-import com.devsu.cuenta.application.port.movimiento.out.ModificarMovimientoPort;
-import com.devsu.cuenta.application.port.movimiento.out.ObtenerMovimientoPort;
+import com.devsu.cuenta.application.movimiento.port.out.ModificarMovimientoPort;
+import com.devsu.cuenta.application.movimiento.port.out.ObtenerMovimientoPort;
 import com.devsu.cuenta.exception.MovimientoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

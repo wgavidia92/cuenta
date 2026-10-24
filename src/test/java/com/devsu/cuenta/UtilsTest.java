@@ -1,7 +1,7 @@
 package com.devsu.cuenta;
 
 import com.devsu.cuenta.application.cuenta.model.CuentaDto;
-import com.devsu.cuenta.application.port.cuenta.out.ObtenerInformacionClientePort;
+import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
 
 import java.math.BigDecimal;
 
