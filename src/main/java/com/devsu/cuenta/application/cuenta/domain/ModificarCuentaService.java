@@ -5,6 +5,7 @@ import com.devsu.cuenta.application.cuenta.port.in.ModificarCuentaUseCase;
 import com.devsu.cuenta.application.cuenta.port.out.ModificarCuentaPort;
 import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
 import com.devsu.cuenta.exception.CuentaException;
+import com.devsu.cuenta.exception.IntegrationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,17 +21,23 @@ class ModificarCuentaService implements ModificarCuentaUseCase {
 
     @Override
     public CuentaDto crearCuenta(NuevaCuentaCommand command) throws CuentaException {
-        command.validar();
-        var informacionCliente = obtenerInformacionClientePort.obtenerInformacionCliente(command.identificacionCliente());
-        var cuenta = new CuentaDto(
-                command.cuenta().cuentaId(),
-                informacionCliente.nombre(),
-                command.cuenta().numero(),
-                command.cuenta().tipoCuenta(),
-                command.cuenta().saldoInicial(),
-                command.cuenta().estado()
-        );
-        return modificarCuentaPort.crearCuenta(cuenta, informacionCliente.id());
+        try {
+            command.validar();
+            var informacionCliente = obtenerInformacionClientePort
+                    .obtenerInformacionCliente(command.identificacionCliente())
+                    .block();
+            var cuenta = new CuentaDto(
+                    command.cuenta().cuentaId(),
+                    informacionCliente.nombre(),
+                    command.cuenta().numero(),
+                    command.cuenta().tipoCuenta(),
+                    command.cuenta().saldoInicial(),
+                    command.cuenta().estado()
+            );
+            return modificarCuentaPort.crearCuenta(cuenta, informacionCliente.id());
+        } catch (IntegrationException e) {
+            throw new CuentaException(e.getMessage());
+        }
     }
 
     @Override

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 logging:
   level:
@@ -13,3 +13,8 @@ spring:
     url: jdbc:h2:mem:devsu-cuenta
     username: sa
     password: sa
+
+integration:
+  clientes:
+    url: http://localhost:8080
+    uri: /v1/clientes/{identificacion}

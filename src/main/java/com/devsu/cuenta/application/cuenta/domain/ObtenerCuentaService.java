@@ -5,6 +5,7 @@ import com.devsu.cuenta.application.cuenta.port.in.ObtenerCuentaUseCase;
 import com.devsu.cuenta.application.cuenta.port.out.ObtenerCuentaPort;
 import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
 import com.devsu.cuenta.exception.CuentaException;
+import com.devsu.cuenta.exception.IntegrationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,9 +24,15 @@ class ObtenerCuentaService implements ObtenerCuentaUseCase {
 
     @Override
     public List<CuentaDto> obtenerCuentasPorIdentificacionCliente(IdentificacionQuery query) throws CuentaException {
-        query.validar();
-        var cliente = obtenerInformacionClientePort.obtenerInformacionCliente(query.identificacionCliente());
-        return obtenerCuentaPort.obtenerCuentaPorClienteId(cliente.id(), cliente.nombre());
+        try {
+            query.validar();
+            var cliente = obtenerInformacionClientePort
+                    .obtenerInformacionCliente(query.identificacionCliente())
+                    .block();
+            return obtenerCuentaPort.obtenerCuentaPorClienteId(cliente.id(), cliente.nombre());
+        } catch (IntegrationException e) {
+            throw new CuentaException(e.getMessage());
+        }
     }
 
 }

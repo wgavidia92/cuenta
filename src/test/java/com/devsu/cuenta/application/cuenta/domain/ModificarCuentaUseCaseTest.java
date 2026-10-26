@@ -6,6 +6,7 @@ import com.devsu.cuenta.application.cuenta.port.in.ModificarCuentaUseCase;
 import com.devsu.cuenta.application.cuenta.port.out.ModificarCuentaPort;
 import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
 import com.devsu.cuenta.exception.CuentaException;
+import com.devsu.cuenta.exception.IntegrationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
@@ -34,7 +36,7 @@ class ModificarCuentaUseCaseTest {
     @Test
     void crearCuentaTest() throws CuentaException {
         Mockito.when(obtenerInformacionClientePort.obtenerInformacionCliente(Mockito.anyString()))
-                .thenReturn(UtilsTest.generarInformacionCliente());
+                .thenReturn(Mono.fromSupplier(UtilsTest::generarInformacionCliente));
         Mockito.when(modificarCuentaPort.crearCuenta(Mockito.any(CuentaDto.class), Mockito.anyLong()))
                 .thenReturn(UtilsTest.generarCuenta());
         var command = new ModificarCuentaUseCase.NuevaCuentaCommand(UtilsTest.generarCuenta(), "1234");
@@ -94,6 +96,16 @@ class ModificarCuentaUseCaseTest {
         var command = new ModificarCuentaUseCase.CuentaCommand(cuenta, "");
         var excepcion = Assertions.assertThrows(CuentaException.class, () -> modificarCuentaUseCase.actualizarCuenta(command));
         Assertions.assertEquals(ModificarCuentaUseCase.ERROR_INFORMACION_CUENTA, excepcion.getMessage());
+    }
+
+    @Test
+    void crearCuentaConExcepcionIntegracionTest() throws CuentaException {
+        Mockito.when(obtenerInformacionClientePort.obtenerInformacionCliente(Mockito.anyString()))
+                .thenThrow(new IntegrationException("Error integracion"));
+
+        var command = new ModificarCuentaUseCase.NuevaCuentaCommand(UtilsTest.generarCuenta(), "1234");
+        var excepcion = Assertions.assertThrows(CuentaException.class, () -> modificarCuentaUseCase.crearCuenta(command));
+        Assertions.assertEquals("Error integracion", excepcion.getMessage());
     }
 
 }
