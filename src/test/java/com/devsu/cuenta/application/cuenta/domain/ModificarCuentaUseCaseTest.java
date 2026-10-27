@@ -69,7 +69,7 @@ class ModificarCuentaUseCaseTest {
 
     @Test
     void crearCuentaSinSaldoInicialTest() {
-        var cuenta = new CuentaDto(0L, "", "1234", "", null, true);
+        var cuenta = new CuentaDto(0L, "", "1234", "AHORROS", null, true);
         var command = new ModificarCuentaUseCase.NuevaCuentaCommand(cuenta, "1234");
         var excepcion = Assertions.assertThrows(CuentaException.class, () -> modificarCuentaUseCase.crearCuenta(command));
         Assertions.assertEquals(ModificarCuentaUseCase.ERROR_INFORMACION_CUENTA, excepcion.getMessage());
@@ -84,15 +84,16 @@ class ModificarCuentaUseCaseTest {
     }
 
     @Test
-    void modificarCuentaSinIdentificacionTest() {
-        var command = new ModificarCuentaUseCase.CuentaCommand(UtilsTest.generarCuenta(), "");
+    void modificarCuentaSinTipoCuentaTest() {
+        var cuenta = new CuentaDto(0L, "", "1234", "", null, true);
+        var command = new ModificarCuentaUseCase.CuentaCommand(cuenta, "");
         var excepcion = Assertions.assertThrows(CuentaException.class, () -> modificarCuentaUseCase.actualizarCuenta(command));
         Assertions.assertEquals(ModificarCuentaUseCase.ERROR_INFORMACION_CUENTA, excepcion.getMessage());
     }
 
     @Test
-    void modificarCuentaSinTipoCuentaTest() {
-        var cuenta = new CuentaDto(0L, "", "1234", "", null, true);
+    void modificarCuentaSinSaldoInicialTest() {
+        var cuenta = new CuentaDto(0L, "", "1234", "AHORROS", null, true);
         var command = new ModificarCuentaUseCase.CuentaCommand(cuenta, "");
         var excepcion = Assertions.assertThrows(CuentaException.class, () -> modificarCuentaUseCase.actualizarCuenta(command));
         Assertions.assertEquals(ModificarCuentaUseCase.ERROR_INFORMACION_CUENTA, excepcion.getMessage());

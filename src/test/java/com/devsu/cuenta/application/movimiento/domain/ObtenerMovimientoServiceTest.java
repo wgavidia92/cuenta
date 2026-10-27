@@ -48,4 +48,12 @@ class ObtenerMovimientoServiceTest {
         Assertions.assertDoesNotThrow(() -> obtenerMovimientoUseCase.obtenerMovimientos(query));
     }
 
+    @Test
+    void obtenerMovimientosSinNumeroCuentaTest() {
+        var query = new ObtenerMovimientoUseCase.MovimientoQuery("");
+        var excepcion = Assertions.assertThrows(MovimientoException.class,
+                () -> obtenerMovimientoUseCase.obtenerMovimientos(query));
+        Assertions.assertEquals(ObtenerMovimientoUseCase.ERROR_NUMERO_CUENTA, excepcion.getMessage());
+    }
+
 }

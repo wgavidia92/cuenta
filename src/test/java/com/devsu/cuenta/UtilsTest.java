@@ -2,8 +2,10 @@ package com.devsu.cuenta;
 
 import com.devsu.cuenta.application.cuenta.model.CuentaDto;
 import com.devsu.cuenta.application.cuenta.port.out.ObtenerInformacionClientePort;
+import com.devsu.cuenta.application.movimiento.model.MovimientoDto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class UtilsTest {
 
@@ -23,6 +25,15 @@ public class UtilsTest {
                 BigDecimal.TEN,
                 true
         );
+    }
+
+    public static MovimientoDto generarMovimiento(String tipoMovimiento) {
+        return new MovimientoDto(1L,
+                "1234",
+                LocalDateTime.now(),
+                tipoMovimiento,
+                BigDecimal.ONE,
+                BigDecimal.TEN);
     }
 
 }
